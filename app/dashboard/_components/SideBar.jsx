@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Progress } from "@/components/ui/progress";
 import { UserDetailContext } from "@/app/_context/UserDetailContext";
 import { usePathname } from "next/navigation";
+import CreateButton from "./createButton";
 function SideBar() {
   const menuOption = [
     {
@@ -31,10 +32,11 @@ function SideBar() {
   return (
     <div className="w-64 fixed h-screen shadow-md p-5">
       <div className="flex gap-2 item-center">
-        <Image src={"/logo.png"} alt="logo" width={35} height={35}></Image>
+        <Image src={"/logo.png"} alt="logo" width={35} height={35} />
         <h2 className="font-medium text-lg">Video Editor</h2>
       </div>
       <ul className="mt-10">
+        <CreateButton />
         {menuOption.map((item, index) => (
           <Link href={item.path} key={index}>
             <li

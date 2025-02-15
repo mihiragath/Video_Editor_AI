@@ -3,10 +3,12 @@ import { useUser } from "@clerk/nextjs";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { UserDetailContext } from "./_context/UserDetailContext";
+import { VideoFrameContext } from "./_context/VideoFrameContext";
 
 function Provider({ children }) {
   const { user } = useUser();
   const [userDetail, setuserDetail] = useState([]);
+  const [videoFrames, setVideoFrames] = useState([]);
 
   useEffect(() => {
     user && saveUserInfo();
@@ -22,7 +24,9 @@ function Provider({ children }) {
   return (
     <div>
       <UserDetailContext.Provider value={{ userDetail, setuserDetail }}>
-        {children}
+        <VideoFrameContext.Provider value={{ videoFrames, setVideoFrames }}>
+          {children}
+        </VideoFrameContext.Provider>
       </UserDetailContext.Provider>
     </div>
   );
