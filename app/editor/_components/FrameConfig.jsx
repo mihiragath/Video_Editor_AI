@@ -11,6 +11,7 @@ import {
 import { Frame, LeafIcon } from "lucide-react";
 import TextAreaBox from "./TextAreaBox";
 import { VideoFrameContext } from "@/app/_context/VideoFrameContext";
+import SlideField from "./SlideField";
 
 function FrameConfig() {
   const { videoFrames, setVideoFrames } = useContext(VideoFrameContext);
@@ -56,6 +57,10 @@ function FrameConfig() {
             <TextAreaBox
               frame={frame}
               handleInputChange={(value) => handleInputChange("test", value)}
+            />
+            <SlideField
+              label={"Font Size"}
+              handleInputChange={(value) => handleInputChange("fontSize", value)}
             />
           </AccordionContent>
         </AccordionItem>

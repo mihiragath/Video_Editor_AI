@@ -26,9 +26,7 @@ function RemotionComposition({ frameList }) {
                 <h2
                   style={{
                     color: "white",
-                    transform: `translateX(${width / 2 - 30}px) translateY(${
-                      height / 2 - 30
-                    }px)`,
+                    fontSize:frame?.fontSize
                   }}
                 >
                   {frame.text}

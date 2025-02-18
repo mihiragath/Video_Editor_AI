@@ -16,37 +16,32 @@ const defaultFrame = {
 };
 
 function TrackList() {
-  const [frameList, setFrameList] = useState([defaultFrame]);
-  const [selectedFrame, setSelectedFrame] = useState(0);
   const { videoFrames, setVideoFrames } = useContext(VideoFrameContext);
+  const [frameList, setFrameList] = useState(videoFrames?.frameList || [defaultFrame]);
+  const [selectedFrame, setSelectedFrame] = useState(0);
 
   const addNewFrame = () => {
-    setFrameList((prev) => [...prev, defaultFrame]);
+    setFrameList((prev) => [...prev, { ...defaultFrame }]);
   };
 
   const removeFrame = (indexToRemove) => {
-    const updatedFrameList = frameList?.filter(
-      (_, index) => index !== indexToRemove
-    );
-    setFrameList(updatedFrameList);
+    setFrameList((prev) => prev.filter((_, index) => index !== indexToRemove));
   };
 
   useEffect(() => {
-    let totalDuration = 0;
-    frameList.forEach((frame) => {
-      totalDuration = totalDuration + frame.duration;
-    });
+    const totalDuration = frameList.reduce((acc, frame) => acc + frame.duration, 0);
 
-    setVideoFrames({
-      totalDuration: totalDuration,
-      frameList: frameList,
-      selectedFrame: selectedFrame,
-    });
-  }, [frameList, selectedFrame]);
+    setVideoFrames((prev) => ({
+      ...prev,
+      totalDuration,
+      frameList,
+      selectedFrame,
+    }));
+  }, [frameList, selectedFrame, setVideoFrames]);
 
   useEffect(() => {
-    if (videoFrames && videoFrames.frameList !== frameList) {
-      setFrameList(videoFrames?.frameList);
+    if (videoFrames?.frameList && JSON.stringify(videoFrames.frameList) !== JSON.stringify(frameList)) {
+      setFrameList(videoFrames.frameList);
     }
   }, [videoFrames]);
 
@@ -57,21 +52,21 @@ function TrackList() {
           <div
             key={index}
             className={`flex flex-col items-center border-b p-2 mt-3 rounded-lg cursor-pointer ${
-              selectedFrame == index && "bg-white"
+              selectedFrame === index ? "bg-white" : ""
             }`}
             onClick={() => setSelectedFrame(index)}
           >
             <Image
               src={frame.image}
-              alt={index}
+              alt={`Frame ${index}`}
               width={40}
               height={40}
               className="w-full h-[40px] object-contain rounded-lg"
             />
             <h2 className="text-xs line-clamp-2">{frame.text}</h2>
-            {selectedFrame == index && (
+            {selectedFrame === index && (
               <Trash2
-                className="mt-1 h-3 w-3 text-red-500"
+                className="mt-1 h-3 w-3 text-red-500 cursor-pointer"
                 onClick={() => removeFrame(index)}
               />
             )}

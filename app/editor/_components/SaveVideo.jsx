@@ -11,25 +11,36 @@ function SaveVideo() {
   const { videoId } = useParams();
 
   useEffect(() => {
-    videoId && GetVideoData();
+    if (videoId) GetVideoData();
   }, [videoId]);
 
   const saveVideo = async () => {
-    const result = await axios.put("/api/video", {
-      videoId: videoId,
-      videoData: videoFrames,
-    });
-    toast("Video Saved!");
+    try {
+      const result = await axios.put("/api/video", {
+        videoId: videoId,
+        videoData: videoFrames,
+      });
+      toast.success("Video Saved!");
+    } catch (error) {
+      console.error("Error saving video:", error);
+      toast.error("Failed to save video!");
+    }
   };
 
   const GetVideoData = async () => {
-    const result = await axios.get('/api/video/videoId='+videoId);
-    setVideoFrames(result?.data?.videoData);
-  }
+    try {
+      const result = await axios.get(`/api/video?videoId=${videoId}`);
+      setVideoFrames(result?.data?.videoData);
+    } catch (error) {
+      console.error("Error fetching video data:", error);
+      toast.error("Failed to load video data!");
+    }
+  };
+
   return (
     <div>
-      <Button variant="outline" onClick={saveVideo()}>
-        Save 
+      <Button variant="outline" onClick={saveVideo}>
+        Save
       </Button>
     </div>
   );

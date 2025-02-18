@@ -1,10 +1,10 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import Header from "../../dashboard/_components/Header";
-import TrackList from "../_components/TrackList";
-import RemotionPlayer from "../_components/RemotionPlayer";
-import SaveVideo from "../_components/SaveVideo";
-import FrameConfig from "../_components/FrameConfig";
+import Header from "../dashboard/_components/Header";
+import TrackList from "./_components/TrackList";
+import RemotionPlayer from "./_components/RemotionPlayer";
+import SaveVideo from "./_components/SaveVideo";
+import FrameConfig from "./_components/FrameConfig";
 
 function Editor() {
   return (
