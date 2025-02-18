@@ -44,6 +44,12 @@ function TrackList() {
     });
   }, [frameList, selectedFrame]);
 
+  useEffect(() => {
+    if (videoFrames && videoFrames.frameList !== frameList) {
+      setFrameList(videoFrames?.frameList);
+    }
+  }, [videoFrames]);
+
   return (
     <div className="p-5 bg-gray-100 rounded-lg">
       <div className="h-[80vh] overflow-scroll scrollbar-hide">
